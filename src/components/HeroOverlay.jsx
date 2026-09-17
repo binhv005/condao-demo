@@ -138,13 +138,6 @@ export default function HeroOverlay({ overlay1Ref, overlay2Ref, overlay3Ref }) {
               </div>
             </button>
           </div>
-
-          {/* Pagination step 01 ── 03 */}
-          <div className="initial-steps-row">
-            <span className="step-active-num">01</span>
-            <div className="step-active-line" />
-            <span className="step-total-num">03</span>
-          </div>
         </div>
 
         {/* Bottom Feature Bar (Centered on desktop, sleek carousel on mobile) */}
@@ -215,16 +208,6 @@ export default function HeroOverlay({ overlay1Ref, overlay2Ref, overlay3Ref }) {
                 </svg>
               </span>
             </button>
-          </div>
-
-          <div className="hero-steps">
-            <span className="step-num active">01</span>
-            <div className="step-bar active">
-              <div className="step-bar-fill" />
-            </div>
-            <span className="step-num">02</span>
-            <div className="step-bar" />
-            <span className="step-num">03</span>
           </div>
         </div>
 
