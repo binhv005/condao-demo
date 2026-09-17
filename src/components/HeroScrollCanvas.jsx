@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import HeroOverlay from './HeroOverlay';
 import './HeroScrollCanvas.css';
 
@@ -10,8 +10,6 @@ export default function HeroScrollCanvas() {
   const overlay1Ref = useRef(null);
   const overlay2Ref = useRef(null);
   const overlay3Ref = useRef(null);
-  const [loadProgress, setLoadProgress] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   // References for animation state
   const framesRef = useRef([]);
@@ -151,7 +149,6 @@ export default function HeroScrollCanvas() {
     };
 
     // Preload all 196 frames
-    let loaded = 0;
     framesRef.current = [];
 
     for (let i = 0; i < TOTAL_FRAMES; i++) {
@@ -159,22 +156,10 @@ export default function HeroScrollCanvas() {
       img.src = getFrameUrl(i);
 
       img.onload = () => {
-        loaded++;
-        const percent = Math.round((loaded / TOTAL_FRAMES) * 100);
-        setLoadProgress(percent);
-
-        // Render first frame immediately
+        // Render first frame immediately once it arrives
         if (i === 0 && currentFrameRef.current === 0) {
           render();
         }
-
-        if (loaded === TOTAL_FRAMES) {
-          setTimeout(() => setIsLoaded(true), 200);
-        }
-      };
-
-      img.onerror = () => {
-        loaded++;
       };
 
       framesRef.current.push(img);
@@ -198,16 +183,6 @@ export default function HeroScrollCanvas() {
 
   return (
     <div className="hero-scroll-wrapper">
-      {/* Sleek Minimal Loading Line */}
-      <div className={`loader-container ${isLoaded ? 'loaded' : ''}`}>
-        <div className="loader-track">
-          <div
-            className="loader-progress"
-            style={{ width: `${loadProgress}%` }}
-          />
-        </div>
-      </div>
-
       {/* Fixed Fullscreen Canvas */}
       <div className="canvas-container">
         <canvas ref={canvasRef} id="hero-canvas" />
