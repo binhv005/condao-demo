@@ -275,28 +275,42 @@ export default function HeroOverlay({ overlay1Ref, overlay2Ref, overlay3Ref }) {
           </div>
 
           <div className="bottom-cards">
-            <div className="mini-card">
-              <div className="card-thumb" style={{ backgroundImage: 'url(/frames/ezgif-frame-140.jpg)' }}>
-                <div className="card-thumb-overlay" />
-                <div className="play-button">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="5 3 19 12 5 21 5 3" />
+            {/* Card 1: XEM VIDEO */}
+            <div className="banner-card video-card" style={{ backgroundImage: 'url(/frames/ezgif-frame-001.jpg)' }}>
+              <div className="banner-card-overlay" />
+              <div className="banner-card-content">
+                <div className="banner-play-circle">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="8 5 19 12 8 19 8 5" />
+                  </svg>
+                </div>
+                <div className="banner-text-group">
+                  <span className="banner-title">XEM VIDEO</span>
+                  <p className="banner-desc">Trải nghiệm cùng chúng tôi</p>
+                </div>
+                <div className="banner-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <polyline points="14 6 20 12 14 18" />
                   </svg>
                 </div>
               </div>
-              <div className="card-info">
-                <span className="card-tag">XEM VIDEO</span>
-                <p className="card-label">Trải nghiệm cùng chúng tôi</p>
-              </div>
             </div>
 
-            <div className="mini-card">
-              <div className="card-thumb" style={{ backgroundImage: 'url(/frames/ezgif-frame-001.jpg)' }}>
-                <div className="card-thumb-overlay" />
-              </div>
-              <div className="card-info">
-                <span className="card-tag">KHÁM PHÁ</span>
-                <p className="card-label">Vẻ đẹp Côn Đảo</p>
+            {/* Card 2: KHÁM PHÁ */}
+            <div className="banner-card explore-card" style={{ backgroundImage: 'url(/frames/ezgif-frame-090.jpg)' }}>
+              <div className="banner-card-overlay" />
+              <div className="banner-card-content">
+                <div className="banner-text-group banner-text-solo">
+                  <span className="banner-title">KHÁM PHÁ</span>
+                  <p className="banner-desc">Vẻ đẹp Côn Đảo</p>
+                </div>
+                <div className="banner-arrow">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="4" y1="12" x2="20" y2="12" />
+                    <polyline points="14 6 20 12 14 18" />
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
