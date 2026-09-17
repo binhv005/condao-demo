@@ -439,6 +439,10 @@
   margin-bottom: clamp(16px, 2.2vh, 22px);
 }
 
+.center-desc .desc-line {
+  display: inline;
+}
+
 .center-cta-wrap {
   display: flex;
   justify-content: center;
@@ -1112,9 +1116,15 @@
   }
 
   .center-desc {
-    font-size: 12px;
-    line-height: 1.55;
+    font-size: clamp(10.5px, 2.9vw, 12px);
+    line-height: 1.6;
     margin-bottom: 14px;
+    max-width: 100%;
+  }
+
+  .center-desc .desc-line {
+    display: block;
+    white-space: normal;
   }
 
   .hero-bottom-row {

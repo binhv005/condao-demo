@@ -117,8 +117,9 @@ export default function HeroOverlay({ overlay1Ref, overlay2Ref, overlay3Ref }) {
           </h1>
 
           <p className="center-desc">
-            Khám phá không gian nghỉ dưỡng lý tưởng, hòa mình vào thiên nhiên trong lành<br />
-            và cảm nhận trọn vẹn từng khoảnh khắc bình yên giữa biển trời Côn Đảo.
+            <span className="desc-line">Khám phá không gian nghỉ dưỡng lý tưởng,</span>{' '}
+            <span className="desc-line">hòa mình vào thiên nhiên trong lành và cảm nhận trọn vẹn</span>{' '}
+            <span className="desc-line">từng khoảnh khắc bình yên giữa biển trời Côn Đảo.</span>
           </p>
 
           <div className="center-cta-wrap">
