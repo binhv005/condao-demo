@@ -5,6 +5,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeNav, setActiveNav] = useState('TRANG CHỦ');
   const [currentLang, setCurrentLang] = useState('VI');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,6 +20,17 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on resize to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1024) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const navItems = [
     { label: 'TRANG CHỦ', href: '#' },
     { label: 'GIỚI THIỆU', href: '#gioi-thieu' },
@@ -28,11 +40,16 @@ export default function Header() {
     { label: 'LIÊN HỆ', href: '#lien-he' },
   ];
 
+  const handleNavClick = (label) => {
+    setActiveNav(label);
+    setMobileMenuOpen(false);
+  };
+
   return (
     <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-container">
         {/* Left: Logo */}
-        <a href="#" className="logo-brand">
+        <a href="#" className="logo-brand" onClick={() => setMobileMenuOpen(false)}>
           <div className="logo-icon">
             <svg
               width="28"
@@ -41,7 +58,6 @@ export default function Header() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Luxury tree/leaves emblem */}
               <path
                 d="M12 22V13M12 13C12 9 8 5 4 5C4 9 7 13 12 13ZM12 13C12 9 16 5 20 5C20 9 17 13 12 13ZM12 17C10 15 7 14 4 14C4 17 7 19 12 17ZM12 17C14 15 17 14 20 14C20 17 17 19 12 17Z"
                 stroke="url(#goldGradient)"
@@ -64,7 +80,7 @@ export default function Header() {
           </div>
         </a>
 
-        {/* Center: Navigation Menu */}
+        {/* Center: Desktop Navigation Menu */}
         <nav className="header-nav">
           <ul className="nav-list">
             {navItems.map((item) => (
@@ -74,7 +90,7 @@ export default function Header() {
                   className={`nav-link ${activeNav === item.label ? 'active' : ''}`}
                   onClick={(e) => {
                     e.preventDefault();
-                    setActiveNav(item.label);
+                    handleNavClick(item.label);
                   }}
                 >
                   {item.label}
@@ -84,9 +100,9 @@ export default function Header() {
           </ul>
         </nav>
 
-        {/* Right: Booking Action & Language */}
+        {/* Right: Actions & Mobile Hamburger */}
         <div className="header-actions">
-          <button className="btn-booking">
+          <button className="btn-booking desktop-booking">
             <span>ĐẶT PHÒNG</span>
             <svg
               className="btn-arrow"
@@ -103,7 +119,7 @@ export default function Header() {
             </svg>
           </button>
 
-          <div className="lang-switcher">
+          <div className="lang-switcher desktop-lang">
             <button
               className={`lang-btn ${currentLang === 'VI' ? 'active' : ''}`}
               onClick={() => setCurrentLang('VI')}
@@ -117,6 +133,65 @@ export default function Header() {
             >
               EN
             </button>
+          </div>
+
+          {/* Mobile Hamburger Toggle Button */}
+          <button
+            className={`btn-mobile-menu ${mobileMenuOpen ? 'open' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Drawer */}
+      <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
+        <div className="mobile-nav-backdrop" onClick={() => setMobileMenuOpen(false)} />
+        <div className="mobile-nav-content">
+          <ul className="mobile-nav-list">
+            {navItems.map((item) => (
+              <li key={item.label} className="mobile-nav-item">
+                <a
+                  href={item.href}
+                  className={`mobile-nav-link ${activeNav === item.label ? 'active' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.label);
+                  }}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mobile-nav-footer">
+            <button className="btn-booking mobile-btn-booking">
+              <span>ĐẶT PHÒNG NGAY</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+
+            <div className="mobile-lang-switcher">
+              <button
+                className={`lang-btn ${currentLang === 'VI' ? 'active' : ''}`}
+                onClick={() => setCurrentLang('VI')}
+              >
+                Tiếng Việt (VI)
+              </button>
+              <span className="lang-divider">/</span>
+              <button
+                className={`lang-btn ${currentLang === 'EN' ? 'active' : ''}`}
+                onClick={() => setCurrentLang('EN')}
+              >
+                English (EN)
+              </button>
+            </div>
           </div>
         </div>
       </div>

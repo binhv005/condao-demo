@@ -210,9 +210,172 @@
   font-size: 10px;
 }
 
-/* Responsive adjustments */
+/* --- MOBILE HAMBURGER BUTTON --- */
+.btn-mobile-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.3s ease;
+}
+
+.hamburger-line {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.btn-mobile-menu.open .hamburger-line:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.btn-mobile-menu.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.btn-mobile-menu.open .hamburger-line:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* --- MOBILE NAV DRAWER --- */
+.mobile-nav-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-nav-drawer.open {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.mobile-nav-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(320px, 80vw);
+  height: 100%;
+  background: rgba(12, 16, 22, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 84px 28px 36px 28px;
+  box-sizing: border-box;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-drawer.open .mobile-nav-content {
+  transform: translateX(0);
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-nav-link {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
+  color: #f7eed8;
+  transform: translateX(4px);
+  font-weight: 600;
+}
+
+.mobile-nav-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-btn-booking {
+  width: 100%;
+  justify-content: center;
+  padding: 10px 0;
+  font-size: 11px;
+}
+
+.mobile-lang-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 1024px) {
-  .header-nav {
+  .header-nav,
+  .desktop-booking,
+  .desktop-lang {
     display: none;
+  }
+
+  .btn-mobile-menu {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-header {
+    height: 60px;
+  }
+  
+  .header-container {
+    padding: 0 16px;
+  }
+
+  .logo-title {
+    font-size: 14px;
+    letter-spacing: 0.12em;
+  }
+
+  .logo-subtitle {
+    font-size: 6.5px;
+    letter-spacing: 0.28em;
   }
 }
