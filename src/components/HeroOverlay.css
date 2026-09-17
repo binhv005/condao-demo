@@ -820,36 +820,48 @@
 .arc-glass-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 22px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.38);
+  gap: 12px;
+  padding: 8px 10px 8px 20px;
+  background: linear-gradient(135deg, #f7eed8 0%, #e2bd73 50%, #c49a45 100%);
+  border: none;
   border-radius: 50px;
-  color: #ffffff;
-  font-family: 'Be Vietnam Pro', 'Montserrat', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
   cursor: pointer;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: auto;
 }
 
 .arc-glass-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: #ffffff;
+  background: linear-gradient(135deg, #ffffff 0%, #ebd08c 50%, #d4a74f 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 15px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 20px rgba(226, 189, 115, 0.45);
 }
 
-.arc-btn-arrow {
+.arc-glass-btn .arc-btn-text {
+  font-family: 'Montserrat', 'Be Vietnam Pro', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #2b1e0d;
+  text-transform: uppercase;
+}
+
+.arc-glass-btn .arc-btn-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b1e0d;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
-.arc-glass-btn:hover .arc-btn-arrow {
-  transform: translate(2px, -2px);
+.arc-glass-btn:hover .arc-btn-circle {
+  transform: translateX(2px);
+  background: rgba(255, 255, 255, 0.85);
 }
 
 /* Right Arc Gallery */
@@ -1193,9 +1205,17 @@
   }
 
   .arc-glass-btn {
-    padding: 7px 16px;
-    font-size: 11px;
-    gap: 6px;
+    padding: 7px 8px 7px 16px;
+    gap: 10px;
+  }
+
+  .arc-glass-btn .arc-btn-text {
+    font-size: 10px;
+  }
+
+  .arc-glass-btn .arc-btn-circle {
+    width: 22px;
+    height: 22px;
   }
 
   .arc-gallery-wrapper {
