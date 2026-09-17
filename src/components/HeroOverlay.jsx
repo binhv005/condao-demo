@@ -2,6 +2,86 @@ import React from 'react';
 import './HeroOverlay.css';
 
 export default function HeroOverlay({ overlay1Ref, overlay2Ref, overlay3Ref }) {
+  const [activeFeatureIdx, setActiveFeatureIdx] = React.useState(0);
+  const touchStartXRef = React.useRef(null);
+
+  const initialFeatures = [
+    {
+      id: 1,
+      title: 'Không gian xanh',
+      desc: 'Gần gũi thiên nhiên',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+        </svg>
+      )
+    },
+    {
+      id: 2,
+      title: 'Trải nghiệm bản địa',
+      desc: 'Chạm vào văn hóa Côn Đảo',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 4c-1.5 3.5-3.5 6-6 7.5 2.5 1.5 5 3 6 7.5 1-4.5 3.5-6 6-7.5-2.5-1.5-4.5-4-6-7.5Z" />
+          <path d="M12 19c-3-1-5.5-3-7-6 2-1 4.5-1 7 .5" />
+          <path d="M12 19c3-1 5.5-3 7-6-2-1-4.5-1-7 .5" />
+        </svg>
+      )
+    },
+    {
+      id: 3,
+      title: 'Phòng nghỉ ấm cúng',
+      desc: 'Thiết kế tinh tế, thoải mái',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 4v16M2 8h20v12M2 17h20" />
+          <path d="M5 12h5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Z" />
+          <path d="M14 12h5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Z" />
+        </svg>
+      )
+    },
+    {
+      id: 4,
+      title: 'Vị trí lý tưởng',
+      desc: 'Gần biển, dễ dàng khám phá',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 4V2M4.93 6.93 3.51 5.51M19.07 6.93l1.42-1.42M2 14h2M20 14h2M17.66 18.66l1.41 1.41M6.34 18.66l-1.41 1.41" />
+          <path d="M7 14a5 5 0 0 1 10 0" />
+          <path d="M3 18c2.5-1 4.5 1 7 0s4.5-1 7 0 3.5 0 4-1" />
+          <path d="M3 21c2.5-1 4.5 1 7 0s4.5-1 7 0 3.5 0 4-1" />
+        </svg>
+      )
+    }
+  ];
+
+  const prevFeature = (e) => {
+    if (e) e.stopPropagation();
+    setActiveFeatureIdx((prev) => (prev > 0 ? prev - 1 : initialFeatures.length - 1));
+  };
+
+  const nextFeature = (e) => {
+    if (e) e.stopPropagation();
+    setActiveFeatureIdx((prev) => (prev < initialFeatures.length - 1 ? prev + 1 : 0));
+  };
+
+  const onTouchStart = (e) => {
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const onTouchEnd = (e) => {
+    if (touchStartXRef.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartXRef.current - touchEndX;
+    if (diff > 35) {
+      nextFeature();
+    } else if (diff < -35) {
+      prevFeature();
+    }
+    touchStartXRef.current = null;
+  };
+
   return (
     <>
       {/* ========================================================= */}
@@ -67,77 +147,36 @@ export default function HeroOverlay({ overlay1Ref, overlay2Ref, overlay3Ref }) {
           </div>
         </div>
 
-        {/* Bottom Feature Bar (Centered 4 Features + Navigation Arrows) */}
+        {/* Bottom Feature Bar (Centered on desktop, sleek carousel on mobile) */}
         <div className="initial-bottom-panel">
-          <div className="initial-features-grid">
-            {/* 1. Không gian xanh */}
-            <div className="panel-feature-item">
-              <div className="panel-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                </svg>
+          <div 
+            className="initial-features-grid"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            {initialFeatures.map((feat, idx) => (
+              <div 
+                key={feat.id} 
+                className={`panel-feature-item ${idx === activeFeatureIdx ? 'mobile-active' : 'mobile-hidden'}`}
+              >
+                <div className="panel-icon-circle">
+                  {feat.icon}
+                </div>
+                <div className="panel-text">
+                  <h5 className="panel-item-title">{feat.title}</h5>
+                  <p className="panel-item-desc">{feat.desc}</p>
+                </div>
               </div>
-              <div className="panel-text">
-                <h5 className="panel-item-title">Không gian xanh</h5>
-                <p className="panel-item-desc">Gần gũi thiên nhiên</p>
-              </div>
-            </div>
-
-            {/* 2. Trải nghiệm bản địa */}
-            <div className="panel-feature-item">
-              <div className="panel-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 4c-1.5 3.5-3.5 6-6 7.5 2.5 1.5 5 3 6 7.5 1-4.5 3.5-6 6-7.5-2.5-1.5-4.5-4-6-7.5Z" />
-                  <path d="M12 19c-3-1-5.5-3-7-6 2-1 4.5-1 7 .5" />
-                  <path d="M12 19c3-1 5.5-3 7-6-2-1-4.5-1-7 .5" />
-                </svg>
-              </div>
-              <div className="panel-text">
-                <h5 className="panel-item-title">Trải nghiệm bản địa</h5>
-                <p className="panel-item-desc">Chạm vào văn hóa Côn Đảo</p>
-              </div>
-            </div>
-
-            {/* 3. Phòng nghỉ ấm cúng */}
-            <div className="panel-feature-item">
-              <div className="panel-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M2 4v16M2 8h20v12M2 17h20" />
-                  <path d="M5 12h5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Z" />
-                  <path d="M14 12h5a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-5a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1Z" />
-                </svg>
-              </div>
-              <div className="panel-text">
-                <h5 className="panel-item-title">Phòng nghỉ ấm cúng</h5>
-                <p className="panel-item-desc">Thiết kế tinh tế, thoải mái</p>
-              </div>
-            </div>
-
-            {/* 4. Vị trí lý tưởng */}
-            <div className="panel-feature-item">
-              <div className="panel-icon-circle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 4V2M4.93 6.93 3.51 5.51M19.07 6.93l1.42-1.42M2 14h2M20 14h2M17.66 18.66l1.41 1.41M6.34 18.66l-1.41 1.41" />
-                  <path d="M7 14a5 5 0 0 1 10 0" />
-                  <path d="M3 18c2.5-1 4.5 1 7 0s4.5-1 7 0 3.5 0 4-1" />
-                  <path d="M3 21c2.5-1 4.5 1 7 0s4.5-1 7 0 3.5 0 4-1" />
-                </svg>
-              </div>
-              <div className="panel-text">
-                <h5 className="panel-item-title">Vị trí lý tưởng</h5>
-                <p className="panel-item-desc">Gần biển, dễ dàng khám phá</p>
-              </div>
-            </div>
+            ))}
 
             {/* Right: Circular Navigation Arrows */}
             <div className="panel-nav-arrows">
-              <button className="panel-arrow-btn" aria-label="Previous">
+              <button className="panel-arrow-btn" onClick={prevFeature} aria-label="Mục trước">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6" />
                 </svg>
               </button>
-              <button className="panel-arrow-btn" aria-label="Next">
+              <button className="panel-arrow-btn" onClick={nextFeature} aria-label="Mục tiếp theo">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6" />
                 </svg>
