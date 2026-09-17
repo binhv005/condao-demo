@@ -186,6 +186,7 @@ export default function HeroScrollCanvas() {
       {/* Fixed Fullscreen Canvas */}
       <div className="canvas-container">
         <canvas ref={canvasRef} id="hero-canvas" />
+        <div className="hero-dark-overlay" />
       </div>
 
       {/* Cinematic Hero Overlays: Layer 1 (Frame 1), Layer 2 (Frame 90) & Layer 3 (Frame 150) */}
